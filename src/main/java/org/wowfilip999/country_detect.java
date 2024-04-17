@@ -7,18 +7,24 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class country_detect {
     public static String country_name="";
     public static String get ="";
+
     public void detect() throws IOException, URISyntaxException {
-        List<String> dat = FileUtils.readLines(new File("/home/filip/index.html"), String.valueOf(StandardCharsets.UTF_8));
-        for(int a=0;a<200;a++) {
+        FileUtils.copyURLToFile(new URL("https://www.mojeip.cz"),new File(System.getProperty("user.home") + File.separator + "index.html"));
+
+        List<String> dat = FileUtils.readLines(new File(System.getProperty("user.home") + File.separator + "index.html"), String.valueOf(StandardCharsets.UTF_8));
+        for(int a=0;a<137;a++) {
 
             if(a==136) {
                 get = dat.get(a).replace("</font></b> ","");
+                File read_index = new File(System.getProperty("user.home") + File.separator + "index.html");
+                read_index.delete();
             }
         }
 
