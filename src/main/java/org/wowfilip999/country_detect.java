@@ -2,14 +2,15 @@ package org.wowfilip999;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.FileUtils;
-
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Scanner;
 
 public class country_detect {
     public static String country_name="";
@@ -23,19 +24,22 @@ public class country_detect {
     }
 
     public void detect() throws IOException, URISyntaxException {
-        FileUtils.copyURLToFile(new URL("https://www.mojeip.cz"),new File(System.getProperty("user.home") + File.separator + "index.html"));
+        URL get_ip = new URL("https://www.mojeip.cz");
+        ReadableByteChannel read_web = Channels.newChannel(get_ip.openStream());
+        FileOutputStream fos = new FileOutputStream(System.getProperty("user.home") + File.separator + "index.html");
+        fos.getChannel().transferFrom(read_web, 0, Long.MAX_VALUE);
 
-        List<String> dat = FileUtils.readLines(new File(System.getProperty("user.home") + File.separator + "index.html"), String.valueOf(StandardCharsets.UTF_8));
+        FileReader r = new FileReader(new File(System.getProperty("user.home") + File.separator + "index.html"));
+        Scanner r_get = new Scanner(r);
         for(int a=0;a<137;a++) {
+            r_get.nextLine();
 
-            if(a==136) {
-                get = dat.get(a).replace("</font></b> ","");
+            if(a==135) {
+                get = r_get.nextLine().replace("</font></b> ","");
                 File read_index = new File(System.getProperty("user.home") + File.separator + "index.html");
                 read_index.delete();
             }
         }
-
-
 
         URI jsonUrl = new URI("https://api.iplocation.net/?ip=" + String.valueOf(get).replace(" ",""));
 
