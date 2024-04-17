@@ -15,11 +15,11 @@ import java.util.Scanner;
 public class country_detect {
     public static String country_name="";
     private String get ="";
-    public String getCountry_name() {
+    private String getCountry_name() {
         return country_name;
     }
 
-    public void setCountry_name(String country_name) {
+    private void setCountry_name(String country_name) {
         this.country_name = country_name;
     }
 
