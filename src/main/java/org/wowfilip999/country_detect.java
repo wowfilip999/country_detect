@@ -14,6 +14,13 @@ import java.util.List;
 public class country_detect {
     public static String country_name="";
     public static String get ="";
+    public String getCountry_name() {
+        return country_name;
+    }
+
+    public void setCountry_name(String country_name) {
+        this.country_name = country_name;
+    }
 
     public void detect() throws IOException, URISyntaxException {
         FileUtils.copyURLToFile(new URL("https://www.mojeip.cz"),new File(System.getProperty("user.home") + File.separator + "index.html"));
@@ -34,9 +41,8 @@ public class country_detect {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-         mapper.readValue(jsonUrl.toURL(), data.class);
-         data get = new data();
-        country_name=get.getCountry_name();
+         mapper.readValue(jsonUrl.toURL(), country_detect.class);
+        country_name=country_detect.country_name;
 
 
 
