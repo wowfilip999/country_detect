@@ -13,7 +13,7 @@ import java.util.List;
 
 public class country_detect {
     public static String country_name="";
-    public static String get ="";
+    private String get ="";
     public String getCountry_name() {
         return country_name;
     }
